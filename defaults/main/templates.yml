@@ -16,6 +16,7 @@ login_defs_template: etc/login.defs.j2
 login_template: etc/pam.d/login.j2
 logrotate_conf_template: etc/logrotate.conf.j2
 motd_template: etc/motd.j2
+resolv_conf_template: etc/resolv.conf.j2
 resolved_conf_template: etc/systemd/resolved.conf.j2
 rkhunter_template: etc/default/rkhunter.j2
 ssh_config_template: etc/ssh/ssh_config.j2
