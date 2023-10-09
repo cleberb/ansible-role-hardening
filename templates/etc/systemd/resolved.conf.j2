@@ -10,7 +10,7 @@ FallbackDNS={{ fallback_dns | join(' ') }}
 {% if dnssec %}
 DNSSEC={{ dnssec }}
 {% endif %}
-{% if ansible_local.systemd.version|int >= 239 %}
+{% if ansible_local.systemd.version | int >= 239 %}
 {% if dns_over_tls %}
 DNSOverTLS={{ dns_over_tls }}
 {% endif %}
