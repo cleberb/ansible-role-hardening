@@ -205,22 +205,29 @@ If `true`, turn off all wireless interfaces.
 ### ./defaults/main/dns.yml
 
 ```yaml
-dns: 127.0.0.1 1.1.1.1
-fallback_dns: 9.9.9.9 1.0.0.1
-dnssec: allow-downgrade
+dns:
+  - 127.0.0.1
+  - 1.1.1.1
 dns_over_tls: opportunistic
+dnssec: allow-downgrade
+fallback_dns:
+  - 9.9.9.9
+  - 1.0.0.1
+network_manager_dns_none: true
 ```
 
 IPv4 and IPv6 addresses to use as system and fallback DNS servers.
-If `dnssec` is set to "allow-downgrade" DNSSEC validation is attempted, but if
-the server does not support DNSSEC properly, DNSSEC mode is automatically
-disabled.
 
-If `dns_over_tls` is true, all connections to the server will be encrypted if
-the DNS server supports DNS-over-TLS and has a valid certificate.
+If `dnssec` is set to "allow-downgrade" DNSSEC validation is attempted, but if the server does not support DNSSEC properly, DNSSEC mode is automatically disabled.
+
+If `dns_over_tls` is `true`, all connections to the server will be encrypted if the DNS server supports DNS-over-TLS and has a valid certificate.
+
+If `network_manager_dns_none` is `true`, the Network-Manager will be prevented from modifying the `/etc/resolv.conf` file, ensuring a fixed DNS configuration, even using a DHCP client. This configuration will only be applied if there are addresses defined in the `dns` variable. This option will be more relevant for systems in the "RedHat" family, which do not enable `resolved` by default.
 
 [systemd](https://github.com/konstruktoid/hardening/blob/master/systemd.adoc#etcsystemdresolvedconf)
 option.
+
+[Network-Manager](https://developer-old.gnome.org/NetworkManager/stable/NetworkManager.conf.html)
 
 ### ./defaults/main/ipv6.yml
 
@@ -789,6 +796,7 @@ login_defs_template: etc/login.defs.j2
 login_template: etc/pam.d/login.j2
 logrotate_conf_template: etc/logrotate.conf.j2
 motd_template: etc/motd.j2
+resolv_conf_template: etc/resolv.conf.j2
 resolved_conf_template: etc/systemd/resolved.conf.j2
 rkhunter_template: etc/default/rkhunter.j2
 ssh_config_template: etc/ssh/ssh_config.j2

@@ -594,11 +594,22 @@
       register: systemd_resolved_conf
       failed_when: systemd_resolved_conf.rc != 0
       changed_when: systemd_resolved_conf.rc != 0
-      with_items:
-        - DNS={{ dns }}
-        - FallbackDNS={{ fallback_dns }}
+      loop:
+        - DNS={{ dns | join(' ') }}
+        - FallbackDNS={{ fallback_dns | join(' ') }}
         - DNSSEC={{ dnssec }}
         - DNSOverTLS={{ dns_over_tls }}
+      when: ansible_os_family != "RedHat"
+
+    - name: Verify resolv.conf
+      become: true
+      ansible.builtin.shell: grep "^{{ item }}$" /etc/resolv.conf
+      register: resolv_conf
+      failed_when: resolv_conf.rc != 0
+      changed_when: resolv_conf.rc != 0
+      loop: "{{ ['nameserver '] | product(dns) | map('join') | list }}"
+      when:
+        - ansible_os_family == "RedHat"
 
     - name: Verify systemd timesyncd.conf
       become: true
