@@ -4,6 +4,7 @@
   ansible.posix.mount:
     path: /tmp
     state: absent
+  when: tmp_systemd_tmpfs | bool
   tags:
     - fstab
 
