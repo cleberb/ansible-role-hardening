@@ -179,6 +179,7 @@
     state: present
     mode: "0640"
     create: true
+  when: auditd_enable_syslog_plugin | bool
   tags:
     - auditd
 
