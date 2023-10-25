@@ -19,24 +19,27 @@
     state: present
     sysctl_set: true
     sysctl_file: "{{ sysctl_conf_dir }}/zz-hardening.conf"
-  when: system_has_ipv6
+  when:
+    - system_has_ipv6
+    - not disable_ipv6
   tags:
     - ipv6
     - sysctl
 
-- name: Sysctl rules if the system has ipv6
-  ansible.builtin.set_fact:
-    sysctl_settings: "{{ generic_sysctl_settings | combine(ipv4_sysctl_settings) | combine(ipv6_sysctl_settings) }}"
-  when: system_has_ipv6
-  tags:
-    - ipv6
-    - sysctl
-
-- name: Sysctl rules if the system does not have ipv6
+- name: Sysctl rules the system
   ansible.builtin.set_fact:
     sysctl_settings: "{{ generic_sysctl_settings | combine(ipv4_sysctl_settings) }}"
-  when: not system_has_ipv6
   tags:
+    - sysctl
+
+- name: Sysctl rules for ipv6
+  ansible.builtin.set_fact:
+    sysctl_settings: "{{ sysctl_settings | combine(ipv6_sysctl_settings) }}"
+  when:
+    - system_has_ipv6
+    - not disable_ipv6
+  tags:
+    - ipv6
     - sysctl
 
 - name: Configure sysctl
