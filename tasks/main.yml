@@ -39,9 +39,9 @@
   ansible.builtin.include_tasks:
     file: systemdconf.yml
 
-- name: Configure systemd journald and logrotate
-  ansible.builtin.include_tasks:
-    file: journalconf.yml
+# - name: Configure systemd journald and logrotate
+#   ansible.builtin.include_tasks:
+#     file: journalconf.yml
 
 - name: Configure systemd timesyncd
   ansible.builtin.include_tasks:
