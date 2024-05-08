@@ -82,6 +82,7 @@
         src: /etc/NetworkManager/NetworkManager.conf
       register: networkmanager_conf_content
       when:
+        - networkmanager_conf.stat.exists is defined and networkmanager_conf.stat.exists | bool
         - '"NetworkManager.service" in services and services["NetworkManager.service"]["status"] not in ("disabled", "unknown")'
 
     - name: Read /etc/resolv.conf
