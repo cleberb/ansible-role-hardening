@@ -169,7 +169,7 @@
   register: update_grub2
   changed_when: update_grub2.rc == 0
 
-- name: Restart Network-Manager
+- name: Restart NetworkManager
   ansible.builtin.systemd:
     name: NetworkManager
     state: restarted
