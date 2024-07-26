@@ -1,0 +1,7 @@
+---
+logind_killuserprocesses: true
+logind_killexcludeusers:
+  - root
+logind_idleaction: lock
+logind_idleactionsec: 15min
+logind_removeipc: true
