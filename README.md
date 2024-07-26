@@ -438,6 +438,20 @@ packages_ubuntu:
 Packages to be installed depending of distribution
 and packages to be removed (`packages_blocklist`).
 
+### ./defaults/main/logind.yml
+
+```yaml
+logind:
+  killuserprocesses: true
+  killexcludeusers:
+    - root
+  idleaction: lock
+  idleactionsec: 15min
+  removeipc: true
+```
+
+Configure the [logind.conf](https://www.freedesktop.org/software/systemd/man/latest/logind.conf.html).
+
 ### ./defaults/main/password.yml
 
 ```yaml
