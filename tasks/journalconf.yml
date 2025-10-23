@@ -83,5 +83,6 @@
     mode: "0644"
     state: present
     create: true
+  when: rsyslogconf.stat.exists
   tags:
     - rsyslog
