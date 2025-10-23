@@ -36,8 +36,8 @@
 - name: SSH v1 should not be used
   become: true
   ansible.builtin.lineinfile:
-    regexp: ALLOW_SSH_PROT_V1
-    line: ALLOW_SSH_PROT_V1=0
+    regexp: (^#|^)ALLOW_SSH_PROT_V1
+    line: ALLOW_SSH_PROT_V1=2
     dest: /etc/rkhunter.conf
     mode: "0640"
     state: present
