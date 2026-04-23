@@ -4,8 +4,9 @@
   ansible.builtin.find:
     paths: [/usr/local/sbin, /usr/local/bin, /usr/sbin, /usr/bin, /sbin, /bin, /snap/bin]
     patterns: "{{ compilers }}"
+    excludes: "X11"
     file_type: any
-    follow: true
+    follow: false
     recurse: true
   register: compiler
   tags:
@@ -19,7 +20,7 @@
     group: root
     mode: "0750"
     state: file
-    follow: true
+    follow: false
   loop: "{{ compiler.files }}"
   tags:
     - compilers
