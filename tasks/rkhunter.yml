@@ -49,3 +49,31 @@
     - packages
     - rkhunter
     - M1049
+
+- name: Allow expected shm files in rkhunter
+  become: true
+  ansible.builtin.lineinfile:
+    regexp: '^ALLOWDEVFILE={{ item.regex }}$'
+    line: 'ALLOWDEVFILE={{ item.line }}'
+    dest: /etc/rkhunter.conf
+    mode: "0640"
+    state: present
+    create: false
+    backrefs: false
+  loop:
+    - regex: '/dev/shm/zbx\.buffer'
+      line: '/dev/shm/zbx.buffer'
+    - regex: '/dev/shm/squid-cf__readers\.shm'
+      line: '/dev/shm/squid-cf__readers.shm'
+    - regex: '/dev/shm/squid-cf__queues\.shm'
+      line: '/dev/shm/squid-cf__queues.shm'
+    - regex: '/dev/shm/squid-cf__metadata\.shm'
+      line: '/dev/shm/squid-cf__metadata.shm'
+    - regex: '/dev/shm/PostgreSQL\.\*'
+      line: '/dev/shm/PostgreSQL.*'
+  notify:
+    - Run rkhunter propupd
+  tags:
+    - packages
+    - rkhunter
+    - M1049
