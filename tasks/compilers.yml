@@ -20,7 +20,7 @@
     group: root
     mode: "0750"
     state: file
-    follow: false
+    follow: true
   loop: "{{ compiler.files }}"
   tags:
     - compilers
